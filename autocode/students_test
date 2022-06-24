@@ -21,14 +21,18 @@ func init() {
 }
 
 // WRITE YOUR CODE BELOW
-
-var ppl People
+var jedi Person = Person{
+	firstName: "Obi-Wan",
+	lastName:  "Kenobi",
+	birthDay:  time.Now().AddDate(1977, 05, 04)}
+var sith Person = Person{
+	firstName: "Anakin",
+	lastName:  "Skywalker",
+	birthDay:  time.Now().AddDate(1999, 05, 04)}
+var ppl People = People{jedi, sith}
 
 func TestLen(t *testing.T){
 	t.Parallel()
-	for i:=0; i<3; i++{
-		ppl= append(ppl, Person{})
-	}
 	
 	expected := len(ppl)
 	result := ppl.Len()
@@ -38,6 +42,29 @@ func TestLen(t *testing.T){
 	}
 }
 
+func TestPeople_Less(t *testing.T) {
+	force := ppl.Less(0, 1)
+	if force {
+		t.Errorf("It should have been a cool fight %v < %v, but got: %v", jedi.birthDay, sith.birthDay, force)
+	}
+	if force {
+		t.Errorf("It should have been a cool fight %v < than %v, but got: %v", jedi.firstName, sith.firstName, force)
+	}
+	if !force {
+		t.Errorf("It should have been a cool fight %v < %v, but got: %v", jedi.lastName, sith.lastName, force)
+	}
+}
+
+func TestPeople_Swap(t *testing.T) {
+		
+	ppl.Swap(0, 1)
+
+	if ppl[0] != sith || ppl[1] != jedi {
+		t.Error("The error while test TestPeople_Swap")
+	}
+}
+
+/*
 func TestLess(t *testing.T){
 	t.Parallel()
 	ppl = People{
@@ -46,11 +73,12 @@ func TestLess(t *testing.T){
 	}
 	result := ppl.Less(0,1)
 	expected := false
-	if result != expected{
+	if result == false{
 		t.Errorf("Expected: %t does not equal result: %t", expected, result)
 	}
-}
+}*/
 
+/*
 func TestSwap(t *testing.T){
 	t.Parallel()
 	sw := People{
@@ -62,7 +90,7 @@ func TestSwap(t *testing.T){
 		t.Errorf("Swap isn't possible")
 	}
 }
-
+*/
 func TestNew(t *testing.T) {
 	t.Parallel()
 
