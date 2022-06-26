@@ -22,14 +22,19 @@ func init() {
 
 // WRITE YOUR CODE BELOW
 
-var ppl People
+var jedi Person = Person{
+	firstName: "Obi-Wan",
+	lastName:  "Kenobi",
+	birthDay:  time.Now().AddDate(1977, 05, 04)}
+var sith Person = Person{
+	firstName: "Anakin",
+	lastName:  "Skywalker",
+	birthDay:  time.Now().AddDate(1999, 05, 04)}
+var ppl People = People{jedi, sith}
 
 func TestLen(t *testing.T){
 	//t.Parallel()
-	for i:=0; i<2; i++{
-		ppl= append(ppl, Person{})
-	}
-	
+		
 	expected := len(ppl)
 	result := ppl.Len()
 
@@ -40,10 +45,10 @@ func TestLen(t *testing.T){
 
 func TestLess(t *testing.T){
 	//t.Parallel()
-	ppl = People{
+	/*ppl = People{
 		Person{firstName:"Obi-Wan", lastName:"Kenobi", birthDay: time.Now()},
 		Person{firstName:"Anakin", lastName:"Skywalker", birthDay: time.Now()},
-	}
+	}*/
 	result := ppl.Less(0,1)
 	expected := false
 	if result != expected{
@@ -53,12 +58,12 @@ func TestLess(t *testing.T){
 
 func TestSwap(t *testing.T){
 	//t.Parallel()
-	sw := People{
+	/*sw := People{
 		Person{"Anakin", "Skywalker", time.Now()},
 		Person{"Luke", "Skywalker", time.Now()},
-	}
-	sw.Swap(0, 1)
-	if sw[0].firstName != "Luke" {
+	}*/
+	ppl.Swap(0, 1)
+	if ppl[0].firstName != "Anakin" {
 		t.Errorf("Swap isn't possible")
 	}
 }
