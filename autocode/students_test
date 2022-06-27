@@ -1,11 +1,12 @@
 package coverage
 
 import (
+	//"fmt"
 	"os"
-	"testing"
-	"time"
 	"reflect"
 	"strconv"
+	"testing"
+	"time"
 )
 
 // DO NOT EDIT THIS FUNCTION
@@ -35,7 +36,7 @@ var sith Person = Person{
 var ppl People = People{jedi, sith}
 
 func TestLen(t *testing.T){
-	//t.Parallel()
+	t.Parallel()
 	expected := len(ppl)
 	result := ppl.Len()
 
@@ -44,17 +45,31 @@ func TestLen(t *testing.T){
 	}
 }
 
-func TestLess(t *testing.T){
-	//t.Parallel()
-	result := ppl.Less(0,1)
-	expected := false
-	if result != expected{
-		t.Errorf("Expected: %t does not equal result: %t", expected, result)
+func Test_Less(t *testing.T) {
+	var birthDate time.Time = time.Date(2000, 1, 1, 12, 0, 0, 0, time.UTC)
+
+	testData := map[string]struct {
+		p       People
+		boolLess bool
+	}{
+		"all_force_users": {[]Person{{"Luke", "Skywalker", birthDate}, {"Luke", "Skywalker", birthDate}}, false},
+		"son_father":  {[]Person{{"Luke", "Skywalker", birthDate}, {"Anakin", "Skywalker", birthDate}}, false},
+		"father_son":  {[]Person{{"Anakin", "Skywalker", birthDate}, {"Luke", "Skywalker", birthDate}}, true},
+		"master_apprentice": {[]Person{{"Qui-Gon", "Jinn", birthDate}, {"Obi-Wan", "Kenobi", birthDate}}, false},
+		"apprentice_master": {[]Person{{"Obi-Wan", "Jinn", birthDate}, {"Qui-Gon", "Kenobi", birthDate}}, true},
+		"master_apprentice1": {[]Person{{"Obi-Wan", "Kenobi", birthDate}, {"Anakin", "Skywalker", birthDate.AddDate(1, 0, 0)}}, false},
+		"master_apprentice2": {[]Person{{"Obi-Wan", "Kenobi", birthDate}, {"Anakin", "Skywalker", birthDate.AddDate(-1, 0, 0)}}, true}}
+
+	for name, tcase := range testData {
+		got := tcase.p.Less(0, 1)
+		if got != tcase.boolLess {
+			t.Errorf("[%s] expected: %t, got %t", name, tcase.boolLess, got)
+		}
 	}
 }
 
 func TestSwap(t *testing.T){
-	//t.Parallel()
+	t.Parallel()
 	ppl.Swap(0, 1)
 	if ppl[0] != sith {
 		t.Errorf("Swap isn't possible")
@@ -91,7 +106,7 @@ func TestRows(t *testing.T) {
 	result := m.Rows()
 
 	if !reflect.DeepEqual(result, expect) {
-		t.Errorf("Wrong Rows")
+		t.Errorf("Wrong Rows count")
 	}
 }
 
@@ -104,7 +119,7 @@ func TestCols(t *testing.T) {
 	result := m.Cols()
 
 	if !reflect.DeepEqual(result, expect) {
-		t.Errorf("Wrong Cols")
+		t.Errorf("Wrong Cols count")
 	}
 }
 
@@ -117,11 +132,11 @@ func TestSet(t *testing.T) {
 	result1 := m.Set(1, 1, 10)
 
 	if !reflect.DeepEqual(m.data, expect) || !result1{
-		t.Errorf("Wrong Matrix after Set value")
+		t.Errorf("Error: Wrong Matrix after Set value")
 	}
 
 	result2 := m.Set(2, 2, 10)
 	if result2 {
-		t.Errorf("wring Set value for Matrix")
+		t.Errorf("Error: Set value for Matrix")
 	}
 }
