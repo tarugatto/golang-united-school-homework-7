@@ -21,19 +21,21 @@ func init() {
 }
 
 // WRITE YOUR CODE BELOW
+
 var jedi Person = Person{
 	firstName: "Obi-Wan",
 	lastName:  "Kenobi",
 	birthDay:  time.Now().AddDate(1977, 05, 04)}
+
 var sith Person = Person{
 	firstName: "Anakin",
 	lastName:  "Skywalker",
 	birthDay:  time.Now().AddDate(1999, 05, 04)}
+
 var ppl People = People{jedi, sith}
 
 func TestLen(t *testing.T){
-	t.Parallel()
-	
+	//t.Parallel()
 	expected := len(ppl)
 	result := ppl.Len()
 
@@ -42,57 +44,25 @@ func TestLen(t *testing.T){
 	}
 }
 
-func TestPeople_Less(t *testing.T) {
-	force := ppl.Less(0, 1)
-	if force {
-		t.Errorf("It should have been a cool fight %v < %v, but got: %v", jedi.birthDay, sith.birthDay, force)
-	}
-	if force {
-		t.Errorf("It should have been a cool fight %v < than %v, but got: %v", jedi.firstName, sith.firstName, force)
-	}
-	if !force {
-		t.Errorf("It should have been a cool fight %v < %v, but got: %v", jedi.lastName, sith.lastName, force)
-	}
-}
-
-func TestPeople_Swap(t *testing.T) {
-		
-	ppl.Swap(0, 1)
-
-	if ppl[0] != sith || ppl[1] != jedi {
-		t.Error("The error while test TestPeople_Swap")
-	}
-}
-
-/*
 func TestLess(t *testing.T){
-	t.Parallel()
-	ppl = People{
-		Person{firstName:"Obi-Wan", lastName:"Kenobi", birthDay: time.Now()},
-		Person{firstName:"Anakin", lastName:"Skywalker", birthDay: time.Now()},
-	}
+	//t.Parallel()
 	result := ppl.Less(0,1)
 	expected := false
-	if result == false{
+	if result != expected{
 		t.Errorf("Expected: %t does not equal result: %t", expected, result)
 	}
-}*/
+}
 
-/*
 func TestSwap(t *testing.T){
-	t.Parallel()
-	sw := People{
-		Person{"Anakin", "Skywalker", time.Now()},
-		Person{"Luke", "Skywalker", time.Now()},
-	}
-	sw.Swap(0, 1)
-	if sw[0].firstName != "Luke" {
+	//t.Parallel()
+	ppl.Swap(0, 1)
+	if ppl[0] != sith {
 		t.Errorf("Swap isn't possible")
 	}
 }
-*/
+
 func TestNew(t *testing.T) {
-	t.Parallel()
+	//t.Parallel()
 
 	result1, err1 := New("cover")
 	if result1 != nil && err1 != strconv.ErrSyntax {
@@ -113,7 +83,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestRows(t *testing.T) {
-	t.Parallel()
+	//t.Parallel()
 
 	m :=&Matrix{2, 2, []int{1, 2, 3, 4}}
 	expect := [][]int{{1, 2}, {3, 4}}
@@ -126,7 +96,7 @@ func TestRows(t *testing.T) {
 }
 
 func TestCols(t *testing.T) {
-	t.Parallel()
+	//t.Parallel()
 
 	m :=&Matrix{2, 2, []int{1, 2, 3, 4}}
 	expect := [][]int{{1, 3}, {2, 4}}
@@ -139,7 +109,7 @@ func TestCols(t *testing.T) {
 }
 
 func TestSet(t *testing.T) {
-	t.Parallel()
+	//t.Parallel()
 
 	m :=&Matrix{2, 2, []int{1, 2, 3, 4}}
 	expect := []int{1, 2, 3, 10}
